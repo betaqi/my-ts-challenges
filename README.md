@@ -4,7 +4,7 @@
 
 这是我学习Type Script 的记录，希望它对你有所帮助
 
-类型体操来自[type-challenges](https://github.com/type-challenges/type-challenges)它对我学习typescript提高了很大的帮助
+类型体操来自[type-challenges](https://github.com/type-challenges/type-challenges)它对我学习typescript提供了很大的帮助
 
 **学习目标**
 
