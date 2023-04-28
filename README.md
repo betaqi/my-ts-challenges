@@ -223,3 +223,67 @@ type T1 = NonNullable<string[] | null | undefined>;		as type T1 = string[]
 type MyNonNullable<Type> = Type & {}
 ```
 
+#### Parameters<Type>
+
+```typescript
+// zh: 参数, 界限，规范；
+// 描述: 从函数类型的参数中使用的类型来构造一个元组类型
+declare function f1(arg: { a: number; b: string }): void;
+ 
+type T0 = Parameters<() => string>;
+     
+type T0 = []
+type T1 = Parameters<(s: string) => void>;
+     
+type T1 = [s: string]
+type T2 = Parameters<<T>(arg: T) => T>;
+     
+type T2 = [arg: unknown]
+type T3 = Parameters<typeof f1>;  as type T3 = [arg: { a: number; b: string;}]
+
+type T4 = Parameters<any>;
+     
+type T4 = unknown[]
+type T5 = Parameters<never>;
+     
+type T5 = never
+type T6 = Parameters<string>;  // tserr: Type 'string' does not satisfy the constraint '(...args: any) => any'.
+	as type T6 = neve     
+
+type T6 = never
+type T7 = Parameters<Function>  // tserr: Type 'Function' does not satisfy the constraint '(...args: any) => any'.
+	type T7 = neve 			  // tserr: Type 'Function' provides no match for the signature '(...args: any): any'.
+
+// ===内部实现===  ps: 内部实现未经过真实的test-case如过有错误请提交pr修正谢谢！
+type MyParameters<Type extends (...arg) => any> = Type extends (...arg: infer P) => any ? P : never 
+```
+
+#### ReturnType<Type>
+
+```typescript
+// 描述: 通过函数返回值的类型来构造一个类型
+declare function f1(): { a: number; b: string };
+ 
+type T0 = ReturnType<() => string>;  	as type T0 = string
+     
+type T1 = ReturnType<(s: string) => void>; 	as type T1 = void
+
+type T2 = ReturnType<<T>() => T>;	type T2 = unknown
+
+type T3 = ReturnType<<T extends U, U extends number[]>() => T>;		type T3 = number[]
+
+type T4 = ReturnType<typeof f1>;	as type T4 = { a: number; b: string; }
+
+type T5 = ReturnType<any>;		as type T5 = any
+
+type T6 = ReturnType<never>;	as type T6 = never
+
+type T7 = ReturnType<string>;	//tserr: Type 'string' does not satisfy the constraint '(...args: any) => any'.
+	type T7 = any
+
+type T8 = ReturnType<Function>; // tserr: Type 'Function' does not satisfy the constraint '(...args: any) => any'.
+  							 // tserr: Type 'Function' provides no match for the signature '(...args: any): any'.
+     type T8 = any
+// ===内部实现===  ps: 内部实现未经过真实的test-case如过有错误请提交pr修正谢谢！
+type MyReturnType<Type extends (...arg: any) => unknown> = Type extends (...arg: any) => infer P ? P : never 
+```
