@@ -10,7 +10,7 @@
 
 - [x] 完成[type-challenges](https://github.com/type-challenges/type-challenges)easy
 - [ ] 完成[type-challenges](https://github.com/type-challenges/type-challenges)medium
-- [ ] Utility Types 实现
+- [x] Utility Types 实现
 
 **下面是我对 Type Script 文档中 Utility Types 的理解和内部实现**
 
